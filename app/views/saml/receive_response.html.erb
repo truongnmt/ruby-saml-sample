@@ -1,0 +1,53 @@
+<css>
+  table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  }
+</css>
+<html>
+<head>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<p>
+  NameID: #{session[:nameid]}
+</p>
+<% if @response.assertion.any? %>
+  <p>Received the following attributes in the SAML Response:</p>
+  <table>
+    <thead>
+    <th>Name</th>
+    <th>Values</th>
+    </thead>
+    <tbody>
+    <% @response.assertion.each do |key,attr_value| %>
+      <tr>
+        <td>
+          <%= key %>
+        </td>
+        <td>
+          <% if attr_value.any? %>
+            <ul>
+              <% attr_value.each do |val| %>
+                <li>
+                  <%= val %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+<br/>
+<br/>
+<p>
+  <%= link_to "Logout", saml_logout_path %>
+</p>
+<p>
+  <%= link_to "Single Logout", saml_logout_path(slo: '1') %>
+</p>
+</body>
+</html>

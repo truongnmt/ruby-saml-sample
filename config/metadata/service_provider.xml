@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                     validUntil="2020-01-24T05:41:14Z"
+                     cacheDuration="PT604800S"
+                     entityID="http://localhost:3000/saml/metadata">
+  <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="true"
+                      protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="http://localhost:3000/saml/logout"/>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                                 Location="http://localhost:3000/saml/acs"
+                                 index="1"/>
+
+  </md:SPSSODescriptor>
+  <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <md:KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <md:X509Data>
+          <md:X509Certificate>
+            MIIC8DCCAdigAwIBAgIQc5ZjVSrAAbdBLLBSSGrUAzANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQDEylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0yMDAxMTQwNTIxNTFaFw0yMzAxMTQwNTIxNTFaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQgU1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm55KNJ3SdvA4k2uNXDEErN7DRMM+5nLaytmbHD/kWluhv4dbtIG3TJ1XzH/7NT5oXHx/ERHVRb0+SWO+FPwwpURgDss7cpDK8gfAzMj8XfFexnz9P8vdyoWpnmz6xpAaG/0U7+ASu+NN8zb0EtSRycu2k4AxJIyvQ6daBs2kNqxny3S1D6WMlVMtGgY7jvaeJ5X2nS4brkFyWb9Zccx315acnDg6aY3yqJV+t6KC1hGdFqwERHCrBWtyhQlO8aY7Z5pM6FCKZ+nq54N2ZGNdKB82ypp3wDMD6pB2lPCNQV+5YEpLNs5HStAD+b6jnOJR6vx78/sFKN2JrmXnl2j+jQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAIngBfySxnxY8La/9YCWwXkmEectUNRXaTmegyeeno/bFBgGdwO012bfSmOEiM2LhkXKWX9t/eChsMMyqTolv7h1mgzVFnI23Mgot3KTH4Yi/mZPi1HfbjxtueeFPaTzQG8ORxMhEUcWfYjMEPas0kTeaBijjfC+dQ1VAs7aX04Jh+uwkrb9A2osf2upweQJv5hjyzGLGYygV+GhOD4V6bq1pHfySqYjgIpPuNdmlxdWXgpLjQd3CZGDzZ7XlJvxp7F8fhSBlpxH5izyBoTQqLXZtkwAuxGO7DJdBZEVysXwhOr3gKXfgEZFsb3C4xZOBnnoSUVEgYiJa/zYkfnrSs
+          </md:X509Certificate>
+        </md:X509Data>
+      </md:KeyInfo>
+    </md:KeyDescriptor>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="https://login.microsoftonline.com/482e1424-2527-4004-a7ee-54aaa5e84cf6/saml2"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="https://hust-dev.onelogin.com/trust/saml2/http-redirect/sso/fed4e0ba-c59b-4098-adfa-17c20814bb57"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                            Location="https://hust-dev.onelogin.com/trust/saml2/http-post/sso/fed4e0ba-c59b-4098-adfa-17c20814bb57"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+                            Location="https://hust-dev.onelogin.com/trust/saml2/soap/sso/fed4e0ba-c59b-4098-adfa-17c20814bb57"/>
+  </md:IDPSSODescriptor>
+</md:EntityDescriptor>

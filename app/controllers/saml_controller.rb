@@ -2,13 +2,13 @@ class SamlController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   extend Saml::Rails::ControllerHelper
-  current_provider "https://app.onelogin.com/saml/metadata/fed4e0ba-c59b-4098-adfa-17c20814bb57"
+  current_provider :set_provider
 
   def request_authentication
-    provider = Saml.provider("https://app.onelogin.com/saml/metadata/fed4e0ba-c59b-4098-adfa-17c20814bb57")
-    destination = provider.single_sign_on_service_url(Saml::ProtocolBinding::HTTP_POST)
-
-    authn_request = Saml::AuthnRequest.new(destination: destination)
+    destination = Saml.current_provider.single_sign_on_service_url(Saml::ProtocolBinding::HTTP_POST)
+    authn_request = Saml::AuthnRequest.new(
+        destination: destination
+    )
 
     session[:authn_request_id] = authn_request._id
 
@@ -40,5 +40,11 @@ class SamlController < ApplicationController
     else
       # handle failure
     end
+  end
+
+  private
+
+  def set_provider
+    Saml.provider('https://app.onelogin.com/saml/metadata/fed4e0ba-c59b-4098-adfa-17c20814bb57')
   end
 end

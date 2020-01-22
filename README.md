@@ -1,24 +1,13 @@
-# README
+# ruby-saml-sample
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sample send SAML request and process Response.
+Using [libsaml](https://github.com/digidentity/libsaml) gem.
 
-Things you may want to cover:
+Notice: On IdP make sure to choose "Sign SAML response and assertion".
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- In the project repository run `bundle install`
+- Download IdP metadata and place in `config/metadata`
+- Change sp metadata according to your IdP
+- Navigate to 'localhost:3000/saml/sso'
+- After login on your IdP, you will be redirect to 'localhost/saml/acs' with claimed information
+ 

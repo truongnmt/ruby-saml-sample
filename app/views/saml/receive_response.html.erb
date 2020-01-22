@@ -12,7 +12,7 @@
 <p>
   NameID: #{session[:nameid]}
 </p>
-<% if @response.assertion.any? %>
+<% if @attrs.any? %>
   <p>Received the following attributes in the SAML Response:</p>
   <table>
     <thead>
@@ -20,17 +20,17 @@
     <th>Values</th>
     </thead>
     <tbody>
-    <% @response.assertion.each do |key,attr_value| %>
+    <% @attrs.each do |attr| %>
       <tr>
         <td>
-          <%= key %>
+          <%= attr.name %>
         </td>
         <td>
-          <% if attr_value.any? %>
+          <% if attr.attribute_values.present? %>
             <ul>
-              <% attr_value.each do |val| %>
+              <% attr.attribute_values.each do |val| %>
                 <li>
-                  <%= val %>
+                  <%= val.content %>
                 </li>
               <% end %>
             </ul>

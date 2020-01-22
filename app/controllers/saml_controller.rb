@@ -1,22 +1,17 @@
 class SamlController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  extend Saml::Rails::ControllerHelper
+  extend ::Saml::Rails::ControllerHelper
   current_provider :set_provider
 
   def request_authentication
-    destination = Saml.current_provider.single_sign_on_service_url(Saml::ProtocolBinding::HTTP_POST)
+    destination = Saml.current_provider.single_sign_on_service_url(Saml::ProtocolBinding::HTTP_REDIRECT)
     authn_request = Saml::AuthnRequest.new(
-        destination: destination
+      destination: destination
     )
 
     session[:authn_request_id] = authn_request._id
-
-    @saml_attributes = Saml::Bindings::HTTPPost.create_form_attributes(authn_request)
-
-    params_prefix = @saml_attributes[:location] =~ /\?/ ? '&' : '?'
-    request_params = "#{params_prefix}#{@saml_attributes[:variables].to_query}"
-    redirect_to @saml_attributes[:location] + request_params
+    redirect_to Saml::Bindings::HTTPRedirect.create_url(authn_request)
   end
 
   def receive_response
@@ -31,8 +26,8 @@ class SamlController < ApplicationController
 
     if @response && @response.success?
       if session[:authn_request_id] == @response.in_response_to
-        @response.assertion.fetch_attribute('any_attribute')
-        render :receive_response
+        @attrs = @response.assertion.attribute_statements.flat_map(&:attributes)
+        render 'saml/receive_response'
       else
         # handle unrecognized response
       end
@@ -45,6 +40,6 @@ class SamlController < ApplicationController
   private
 
   def set_provider
-    Saml.provider('https://app.onelogin.com/saml/metadata/fed4e0ba-c59b-4098-adfa-17c20814bb57')
+    Saml.provider('http://localhost:3000/saml/metadata')
   end
 end

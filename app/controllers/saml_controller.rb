@@ -5,7 +5,8 @@ class SamlController < ApplicationController
   current_provider :set_provider
 
   def request_authentication
-    destination = Saml.current_provider.single_sign_on_service_url(Saml::ProtocolBinding::HTTP_REDIRECT)
+    provider = Saml.provider("https://app.onelogin.com/saml/metadata/fed4e0ba-c59b-4098-adfa-17c20814bb57")
+    destination = provider.single_sign_on_service_url(Saml::ProtocolBinding::HTTP_REDIRECT)
     authn_request = Saml::AuthnRequest.new(
       destination: destination
     )

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Saml.setup do |config|
-  config.register_store :file, Saml::ProviderStores::File.new("config/metadata", "config/ssl/server.key"), default: true
+  config.register_store :saml_provider, SamlProvider, default: true
 end
